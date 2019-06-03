@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   
-  #match("/home", { :controller => "home", :action => "home", :via => "get" })
+  match("/home", { :controller => "navigator", :action => "home", :via => "get" })
   
   # Routes for the User question resource:
 
