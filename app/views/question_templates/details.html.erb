@@ -1,0 +1,47 @@
+<h1>
+  Question #<%= @question.id %> details
+</h1>
+
+<div>
+  <div>
+    <a href="/questions">
+      Go back
+    </a>
+  </div>
+
+  <div>
+    <a href="/existing_question_form/<%= @question.id %>">
+      Edit question
+    </a>
+  </div>
+
+  <div>
+    <a href="/delete_question/<%= @question.id %>">
+      Delete question
+    </a>
+  </div>
+</div>
+
+<dl>
+  <dt>
+    Question
+  </dt>
+  <dd>
+    <%= @question.question %>
+  </dd>
+
+  <dt>
+    Created at
+  </dt>
+  <dd>
+    <%= time_ago_in_words(@question.created_at) %> ago
+  </dd>
+
+  <dt>
+    Updated at
+  </dt>
+  <dd>
+    <%= time_ago_in_words(@question.updated_at) %> ago
+  </dd>
+</dl>
+

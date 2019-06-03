@@ -1,0 +1,35 @@
+<h1>
+  Add a new question category
+</h1>
+
+<hr>
+
+<%= render("question_category_templates/validation_failures.html.erb") %>
+
+<form action="/insert_question_category_record" method="post">
+  <div>
+    <label for="question_id">
+      Question
+    </label>
+
+    <input type="text" id="question_id" name="question_id" value="<%= @question_category.question_id %>">
+  </div>
+
+  <div>
+    <label for="category_id">
+      Category
+    </label>
+
+    <input type="text" id="category_id" name="category_id" value="<%= @question_category.category_id %>">
+  </div>
+
+  <button>
+    Create question category
+  </button>
+</form>
+
+<hr>
+
+<a href="/question_categories">
+  Go back
+</a>

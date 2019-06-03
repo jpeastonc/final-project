@@ -1,0 +1,35 @@
+<h1>
+  Edit question tip #<%= @question_tip.id %>
+</h1>
+
+<hr>
+
+<%= render("question_tip_templates/validation_failures.html.erb") %>
+
+<form action="/update_question_tip_record/<%= @question_tip.id %>" method="post">
+  <div>
+    <label for="question_id">
+      Question
+    </label>
+
+    <input type="text" id="question_id" name="question_id" value="<%= @question_tip.question_id %>">
+  </div>
+
+  <div>
+    <label for="content">
+      Content
+    </label>
+
+    <input type="text" id="content" name="content" value="<%= @question_tip.content %>">
+  </div>
+
+  <button>
+    Update question tip
+  </button>
+</form>
+
+<hr>
+
+<a href="/question_tips">
+  Go back
+</a>

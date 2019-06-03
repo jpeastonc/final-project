@@ -1,0 +1,35 @@
+<h1>
+  Add a new reflexion question
+</h1>
+
+<hr>
+
+<%= render("reflexion_question_templates/validation_failures.html.erb") %>
+
+<form action="/insert_reflexion_question_record" method="post">
+  <div>
+    <label for="question_id">
+      Question
+    </label>
+
+    <input type="text" id="question_id" name="question_id" value="<%= @reflexion_question.question_id %>">
+  </div>
+
+  <div>
+    <label for="reflexion_question">
+      Reflexion question
+    </label>
+
+    <input type="text" id="reflexion_question" name="reflexion_question" value="<%= @reflexion_question.reflexion_question %>">
+  </div>
+
+  <button>
+    Create reflexion question
+  </button>
+</form>
+
+<hr>
+
+<a href="/reflexion_questions">
+  Go back
+</a>

@@ -1,0 +1,54 @@
+<h1>
+  Question category #<%= @question_category.id %> details
+</h1>
+
+<div>
+  <div>
+    <a href="/question_categories">
+      Go back
+    </a>
+  </div>
+
+  <div>
+    <a href="/existing_question_category_form/<%= @question_category.id %>">
+      Edit question category
+    </a>
+  </div>
+
+  <div>
+    <a href="/delete_question_category/<%= @question_category.id %>">
+      Delete question category
+    </a>
+  </div>
+</div>
+
+<dl>
+  <dt>
+    Question
+  </dt>
+  <dd>
+    <%= @question_category.question_id %>
+  </dd>
+
+  <dt>
+    Category
+  </dt>
+  <dd>
+    <%= @question_category.category_id %>
+  </dd>
+
+  <dt>
+    Created at
+  </dt>
+  <dd>
+    <%= time_ago_in_words(@question_category.created_at) %> ago
+  </dd>
+
+  <dt>
+    Updated at
+  </dt>
+  <dd>
+    <%= time_ago_in_words(@question_category.updated_at) %> ago
+  </dd>
+</dl>
+

@@ -1,0 +1,27 @@
+<h1>
+  Add a new question
+</h1>
+
+<hr>
+
+<%= render("question_templates/validation_failures.html.erb") %>
+
+<form action="/insert_question_record" method="post">
+  <div>
+    <label for="question">
+      Question
+    </label>
+
+    <input type="text" id="question" name="question" value="<%= @question.question %>">
+  </div>
+
+  <button>
+    Create question
+  </button>
+</form>
+
+<hr>
+
+<a href="/questions">
+  Go back
+</a>

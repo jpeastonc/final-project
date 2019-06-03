@@ -1,0 +1,35 @@
+<h1>
+  Edit user question #<%= @user_question.id %>
+</h1>
+
+<hr>
+
+<%= render("user_question_templates/validation_failures.html.erb") %>
+
+<form action="/update_user_question_record/<%= @user_question.id %>" method="post">
+  <div>
+    <label for="user_id">
+      User
+    </label>
+
+    <input type="text" id="user_id" name="user_id" value="<%= @user_question.user_id %>">
+  </div>
+
+  <div>
+    <label for="question_id">
+      Question
+    </label>
+
+    <input type="text" id="question_id" name="question_id" value="<%= @user_question.question_id %>">
+  </div>
+
+  <button>
+    Update user question
+  </button>
+</form>
+
+<hr>
+
+<a href="/user_questions">
+  Go back
+</a>

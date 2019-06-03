@@ -1,0 +1,54 @@
+<h1>
+  Reflexion question #<%= @reflexion_question.id %> details
+</h1>
+
+<div>
+  <div>
+    <a href="/reflexion_questions">
+      Go back
+    </a>
+  </div>
+
+  <div>
+    <a href="/existing_reflexion_question_form/<%= @reflexion_question.id %>">
+      Edit reflexion question
+    </a>
+  </div>
+
+  <div>
+    <a href="/delete_reflexion_question/<%= @reflexion_question.id %>">
+      Delete reflexion question
+    </a>
+  </div>
+</div>
+
+<dl>
+  <dt>
+    Question
+  </dt>
+  <dd>
+    <%= @reflexion_question.question_id %>
+  </dd>
+
+  <dt>
+    Reflexion question
+  </dt>
+  <dd>
+    <%= @reflexion_question.reflexion_question %>
+  </dd>
+
+  <dt>
+    Created at
+  </dt>
+  <dd>
+    <%= time_ago_in_words(@reflexion_question.created_at) %> ago
+  </dd>
+
+  <dt>
+    Updated at
+  </dt>
+  <dd>
+    <%= time_ago_in_words(@reflexion_question.updated_at) %> ago
+  </dd>
+</dl>
+

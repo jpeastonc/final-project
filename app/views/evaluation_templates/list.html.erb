@@ -1,0 +1,74 @@
+<h1>
+  Evaluation list
+</h1>
+
+<a href="/new_evaluation_form">
+  Add a new evaluation
+</a>
+
+<hr>
+
+<table>
+  <tr>
+    <th>
+      ID
+    </th>
+
+    <th>
+      Rating
+    </th>
+
+    <th>
+      Comment
+    </th>
+
+    <th>
+      User question
+    </th>
+
+    <th>
+      Created at
+    </th>
+
+    <th>
+      Updated at
+    </th>
+
+    <th>
+    </th>
+  </tr>
+
+  <% @evaluations.each do |evaluation| %>
+  <tr>
+    <td>
+      <%= evaluation.id %>
+    </td>
+
+    <td>
+      <%= evaluation.rating %>
+    </td>
+
+    <td>
+      <%= evaluation.comment %>
+    </td>
+
+    <td>
+      <%= evaluation.user_question_id %>
+    </td>
+
+    <td>
+      <%= time_ago_in_words(evaluation.created_at) %> ago
+    </td>
+
+    <td>
+      <%= time_ago_in_words(evaluation.updated_at) %> ago
+    </td>
+
+    <td>
+      <a href="/evaluations/<%= evaluation.id %>">
+        Show details
+      </a>
+    </td>
+  </tr>
+  <% end %>
+</table>

@@ -1,0 +1,27 @@
+<h1>
+  Add a new category
+</h1>
+
+<hr>
+
+<%= render("category_templates/validation_failures.html.erb") %>
+
+<form action="/insert_category_record" method="post">
+  <div>
+    <label for="category_name">
+      Category name
+    </label>
+
+    <input type="text" id="category_name" name="category_name" value="<%= @category.category_name %>">
+  </div>
+
+  <button>
+    Create category
+  </button>
+</form>
+
+<hr>
+
+<a href="/categories">
+  Go back
+</a>

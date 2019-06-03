@@ -1,0 +1,43 @@
+<h1>
+  Edit evaluation #<%= @evaluation.id %>
+</h1>
+
+<hr>
+
+<%= render("evaluation_templates/validation_failures.html.erb") %>
+
+<form action="/update_evaluation_record/<%= @evaluation.id %>" method="post">
+  <div>
+    <label for="rating">
+      Rating
+    </label>
+
+    <input type="text" id="rating" name="rating" value="<%= @evaluation.rating %>">
+  </div>
+
+  <div>
+    <label for="comment">
+      Comment
+    </label>
+
+    <input type="text" id="comment" name="comment" value="<%= @evaluation.comment %>">
+  </div>
+
+  <div>
+    <label for="user_question_id">
+      User question
+    </label>
+
+    <input type="text" id="user_question_id" name="user_question_id" value="<%= @evaluation.user_question_id %>">
+  </div>
+
+  <button>
+    Update evaluation
+  </button>
+</form>
+
+<hr>
+
+<a href="/evaluations">
+  Go back
+</a>

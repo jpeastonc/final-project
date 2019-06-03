@@ -1,0 +1,27 @@
+<h1>
+  Edit user type #<%= @user_type.id %>
+</h1>
+
+<hr>
+
+<%= render("user_type_templates/validation_failures.html.erb") %>
+
+<form action="/update_user_type_record/<%= @user_type.id %>" method="post">
+  <div>
+    <label for="name">
+      Name
+    </label>
+
+    <input type="text" id="name" name="name" value="<%= @user_type.name %>">
+  </div>
+
+  <button>
+    Update user type
+  </button>
+</form>
+
+<hr>
+
+<a href="/user_types">
+  Go back
+</a>

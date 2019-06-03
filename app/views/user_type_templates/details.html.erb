@@ -1,0 +1,47 @@
+<h1>
+  User type #<%= @user_type.id %> details
+</h1>
+
+<div>
+  <div>
+    <a href="/user_types">
+      Go back
+    </a>
+  </div>
+
+  <div>
+    <a href="/existing_user_type_form/<%= @user_type.id %>">
+      Edit user type
+    </a>
+  </div>
+
+  <div>
+    <a href="/delete_user_type/<%= @user_type.id %>">
+      Delete user type
+    </a>
+  </div>
+</div>
+
+<dl>
+  <dt>
+    Name
+  </dt>
+  <dd>
+    <%= @user_type.name %>
+  </dd>
+
+  <dt>
+    Created at
+  </dt>
+  <dd>
+    <%= time_ago_in_words(@user_type.created_at) %> ago
+  </dd>
+
+  <dt>
+    Updated at
+  </dt>
+  <dd>
+    <%= time_ago_in_words(@user_type.updated_at) %> ago
+  </dd>
+</dl>
+

@@ -1,0 +1,66 @@
+<h1>
+  Question tip list
+</h1>
+
+<a href="/new_question_tip_form">
+  Add a new question tip
+</a>
+
+<hr>
+
+<table>
+  <tr>
+    <th>
+      ID
+    </th>
+
+    <th>
+      Question
+    </th>
+
+    <th>
+      Content
+    </th>
+
+    <th>
+      Created at
+    </th>
+
+    <th>
+      Updated at
+    </th>
+
+    <th>
+    </th>
+  </tr>
+
+  <% @question_tips.each do |question_tip| %>
+  <tr>
+    <td>
+      <%= question_tip.id %>
+    </td>
+
+    <td>
+      <%= question_tip.question_id %>
+    </td>
+
+    <td>
+      <%= question_tip.content %>
+    </td>
+
+    <td>
+      <%= time_ago_in_words(question_tip.created_at) %> ago
+    </td>
+
+    <td>
+      <%= time_ago_in_words(question_tip.updated_at) %> ago
+    </td>
+
+    <td>
+      <a href="/question_tips/<%= question_tip.id %>">
+        Show details
+      </a>
+    </td>
+  </tr>
+  <% end %>
+</table>

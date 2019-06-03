@@ -1,0 +1,54 @@
+<h1>
+  Question tip #<%= @question_tip.id %> details
+</h1>
+
+<div>
+  <div>
+    <a href="/question_tips">
+      Go back
+    </a>
+  </div>
+
+  <div>
+    <a href="/existing_question_tip_form/<%= @question_tip.id %>">
+      Edit question tip
+    </a>
+  </div>
+
+  <div>
+    <a href="/delete_question_tip/<%= @question_tip.id %>">
+      Delete question tip
+    </a>
+  </div>
+</div>
+
+<dl>
+  <dt>
+    Question
+  </dt>
+  <dd>
+    <%= @question_tip.question_id %>
+  </dd>
+
+  <dt>
+    Content
+  </dt>
+  <dd>
+    <%= @question_tip.content %>
+  </dd>
+
+  <dt>
+    Created at
+  </dt>
+  <dd>
+    <%= time_ago_in_words(@question_tip.created_at) %> ago
+  </dd>
+
+  <dt>
+    Updated at
+  </dt>
+  <dd>
+    <%= time_ago_in_words(@question_tip.updated_at) %> ago
+  </dd>
+</dl>
+

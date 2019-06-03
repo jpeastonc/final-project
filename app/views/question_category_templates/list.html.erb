@@ -1,0 +1,66 @@
+<h1>
+  Question category list
+</h1>
+
+<a href="/new_question_category_form">
+  Add a new question category
+</a>
+
+<hr>
+
+<table>
+  <tr>
+    <th>
+      ID
+    </th>
+
+    <th>
+      Question
+    </th>
+
+    <th>
+      Category
+    </th>
+
+    <th>
+      Created at
+    </th>
+
+    <th>
+      Updated at
+    </th>
+
+    <th>
+    </th>
+  </tr>
+
+  <% @question_categories.each do |question_category| %>
+  <tr>
+    <td>
+      <%= question_category.id %>
+    </td>
+
+    <td>
+      <%= question_category.question_id %>
+    </td>
+
+    <td>
+      <%= question_category.category_id %>
+    </td>
+
+    <td>
+      <%= time_ago_in_words(question_category.created_at) %> ago
+    </td>
+
+    <td>
+      <%= time_ago_in_words(question_category.updated_at) %> ago
+    </td>
+
+    <td>
+      <a href="/question_categories/<%= question_category.id %>">
+        Show details
+      </a>
+    </td>
+  </tr>
+  <% end %>
+</table>

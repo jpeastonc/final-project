@@ -1,0 +1,61 @@
+<h1>
+  Evaluation #<%= @evaluation.id %> details
+</h1>
+
+<div>
+  <div>
+    <a href="/evaluations">
+      Go back
+    </a>
+  </div>
+
+  <div>
+    <a href="/existing_evaluation_form/<%= @evaluation.id %>">
+      Edit evaluation
+    </a>
+  </div>
+
+  <div>
+    <a href="/delete_evaluation/<%= @evaluation.id %>">
+      Delete evaluation
+    </a>
+  </div>
+</div>
+
+<dl>
+  <dt>
+    Rating
+  </dt>
+  <dd>
+    <%= @evaluation.rating %>
+  </dd>
+
+  <dt>
+    Comment
+  </dt>
+  <dd>
+    <%= @evaluation.comment %>
+  </dd>
+
+  <dt>
+    User question
+  </dt>
+  <dd>
+    <%= @evaluation.user_question_id %>
+  </dd>
+
+  <dt>
+    Created at
+  </dt>
+  <dd>
+    <%= time_ago_in_words(@evaluation.created_at) %> ago
+  </dd>
+
+  <dt>
+    Updated at
+  </dt>
+  <dd>
+    <%= time_ago_in_words(@evaluation.updated_at) %> ago
+  </dd>
+</dl>
+
