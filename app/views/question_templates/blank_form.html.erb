@@ -7,12 +7,19 @@
 <%= render("question_templates/validation_failures.html.erb") %>
 
 <form action="/insert_question_record" method="post">
+  <input type="hidden" name="user_id" value="<%= current_user.id %>">
   <div>
-    <label for="question">
-      Question
-    </label>
-
+    <label for="question">Question</label>
     <input type="text" id="question" name="question" value="<%= @question.question %>">
+  </div>
+  <div>
+    <label for="categories[]">Categories</label>
+    <select multiple name="categories[]">
+    <% Category.all.each do |category| %>
+      <option value="<%=category.id%>"><%=category.category_name%></option>
+    <% end %>  
+    </select>
+    <p>(Select all that apply)</p>
   </div>
 
   <button>

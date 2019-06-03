@@ -1,0 +1,26 @@
+@charset "UTF-8";
+
+.main_buttons {
+  min-height: 100px;
+  word-wrap: break-word;
+}
+
+.main_question{
+  font-size: 50px;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+
+.timer_container{
+    text-align: center;
+    widows: 80%;
+}
+
+.timer_container{
+    font-size: 3rem;
+}
+
+.time_label{
+    padding-left: 1rem;
+}

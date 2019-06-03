@@ -28,6 +28,9 @@ class User < ApplicationRecord
   has_many :user_questions, :dependent => :destroy
   belongs_to :user_type
 
-  has_many :evaluations, :through => :user_questions, :source => :evaluation       
+  has_many :evaluations, :through => :user_questions, :source => :evaluation
+  has_many :questions, :dependent => :nullify
+  has_many :reflexion_questions, :dependent => :nullify
+  has_many :question_tips, :dependent => :nullify
          
 end

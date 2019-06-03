@@ -6,6 +6,8 @@
 #  question   :string
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
+#  accepted   :boolean
+#  user_id    :integer
 #
 
 class Question < ApplicationRecord
@@ -14,7 +16,7 @@ class Question < ApplicationRecord
   has_many :tips, :class_name => "QuestionTip", :dependent => :destroy
   has_many :user_questions, :dependent => :destroy
   has_many :reflexion_questions, :dependent => :destroy
-  
   has_many :categories, :through => :question_categories, :source => :category
+  belongs_to :user
   
 end

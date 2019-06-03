@@ -4,44 +4,58 @@
 
 <div>
   <div>
-    <a href="/questions">
-      Go back
-    </a>
+    <a href="/questions">Go back</a>
   </div>
 
   <div>
-    <a href="/existing_question_form/<%= @question.id %>">
-      Edit question
-    </a>
+    <a href="/existing_question_form/<%= @question.id %>">Edit question </a>
   </div>
 
   <div>
-    <a href="/delete_question/<%= @question.id %>">
-      Delete question
-    </a>
+    <a href="/delete_question/<%= @question.id %>">Delete question</a>
   </div>
 </div>
 
 <dl>
-  <dt>
-    Question
-  </dt>
-  <dd>
-    <%= @question.question %>
-  </dd>
+  <dt>Question</dt>
+  <dd><%= @question.question %></dd>
+  
+  <dt>Categories:</dt>
+  
+  <% if @question.categories.empty? %>
+    <dd>This question has no categories</dd>
+  <% else%>
+    <% @question.categories.each do |category| %>
+    <dd><%= category.category_name %></dd>
+    <% end %>
+  <% end%>
+  
+  <dt>Reflexion Questions:</dt>
+  
+  <% if @question.reflexion_questions.empty? %>
+    <dd>This question has no reflexion questions</dd>
+  <% else%>
+    <% @question.reflexion_questions.each do |rq| %>
+    <dd><%= rq.reflexion_question %></dd>
+    <% end %>
+  <% end%>
+  
+  <dt>Tips:</dt>
+  <% if @question.tips.empty? %>
+    <dd>This question has no tips</dd>
+  <% else%>
+    <% @question.tips.each do |tip| %>
+    <dd><%= tip.content %></dd>
+    <% end %>
+  <% end%>
 
-  <dt>
-    Created at
-  </dt>
-  <dd>
-    <%= time_ago_in_words(@question.created_at) %> ago
-  </dd>
 
-  <dt>
-    Updated at
-  </dt>
-  <dd>
-    <%= time_ago_in_words(@question.updated_at) %> ago
-  </dd>
+  
+  <dt>Created at</dt>
+  <dd><%= time_ago_in_words(@question.created_at) %> ago</dd>
+
+  <dt>Updated at</dt>
+  <dd><%= time_ago_in_words(@question.updated_at) %> ago</dd>
+  
 </dl>
 

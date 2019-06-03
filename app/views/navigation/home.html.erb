@@ -1,9 +1,18 @@
-Hello world!
-
 <div class="main_question"><p>What to you want to do?</p></div>
-<ul>
-  <il>Run Full Mock</il>
-  <il>Practice interview questions</il>
-  <il>See my previous questions</il>
-  
-</ul>
+
+
+<div class="btn-group btn-group-justified" role="group" aria-label="...">
+  <div class="btn-group" role="group">
+    <button type="button" class="btn btn-danger btn-lg dropdown-toggle main_buttons" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">Run Full Mock <span class="caret"></span></button>
+    <ul class="dropdown-menu">
+      <li><a href="/full_mock/MBA">MBA Interview</a></li>
+      <li><a href="/full_mock/PM">PM Interview</a></li>
+    </ul>
+  </div>
+  <div class="btn-group" role="group">
+    <button type="button" class="btn btn-primary btn-lg main_buttons main_buttons" onclick="location.href='practice_interview_questions.html';">Practice interview questions</button>
+  </div>
+  <div class="btn-group" role="group">
+    <button type="button" class="btn btn-info btn-lg main_buttons" onclick="location.href='question_history.html';">See my previous questions</button>
+  </div>
+</div>

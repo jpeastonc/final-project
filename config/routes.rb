@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   
   match("/home", { :controller => "navigator", :action => "home", :via => "get" })
+  match("/full_mock/:interview_type", { :controller => "navigator", :action => "full_mock", :via => "get" })
   
   # Routes for the User question resource:
 

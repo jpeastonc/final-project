@@ -21,9 +21,17 @@ class QuestionsController < ApplicationController
     @question = Question.new
 
     @question.question = params.fetch("question")
+    @question.user_id = params.fetch("user_id")
 
     if @question.valid?
       @question.save
+      categories = params.fetch("categories")
+      categories.each do |category_id|
+        qc=QuestionCategory.new
+        qc.category_id=category_id
+        qc.question_id=@question.id
+        qc.save
+      end
 
       redirect_to("/questions", { :notice => "Question created successfully." })
     else

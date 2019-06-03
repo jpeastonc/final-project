@@ -8,17 +8,41 @@
 
 <form action="/update_question_record/<%= @question.id %>" method="post">
   <div>
-    <label for="question">
-      Question
-    </label>
-
+    <label for="question">Question</label>
     <input type="text" id="question" name="question" value="<%= @question.question %>">
+  </div>
+  
+  <div>
+    <label for="categories">Categories</label>
+    <select multiple name="categories">
+    <% Category.all.each do |category| %>
+      <option value="<%=category.id%>"><%=category.category_name%></option>
+    <% end %>  
+    </select>
+    <p>(Select all that apply)</p>
   </div>
 
   <button>
     Update question
   </button>
 </form>
+
+<form action="/add_tip_to_question/<%= @question.id %>" method="post">
+  <div>
+    <label for="new_tip">Tip</label>
+    <input type="text" id="new_tip" name="new_tip" value="Write here your tip">
+  </div>
+  
+  <div>
+    <label for="new_tip">Tip</label>
+    <input type="text" id="new_tip" name="new_tip" value="Write here your tip">
+  </div>
+
+  <button>
+    Add tip
+  </button>
+</form>
+
 
 <hr>
 
