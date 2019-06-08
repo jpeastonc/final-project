@@ -1,6 +1,49 @@
-<h1>
-  Question #<%= @question.id %> details
-</h1>
+<h1>Question: #<%= @question.question %></h1>
+
+
+<h5>Categories:</h5>
+<ul>
+  <% if @question.categories.empty? %>
+    <li>This question has no categories</li>
+  <% else%>
+    <% @question.categories.each do |category| %>
+    <li><%= category.category_name %></li>
+    <% end %>
+  <% end%>
+</ul>
+
+<h5>Reflexion Questions:</h5> 
+<ul>
+  <% if @question.reflexion_questions.empty? %>
+    <li>This question has no reflexion questions</li>
+  <% else%>
+    <% @question.reflexion_questions.each do |rq| %>
+    <li><%= rq.reflexion_question %></li>
+    <% end %>
+  <% end%>
+</ul>
+  
+<h5>Tips:</h5>
+<ul>  
+  <% if @question.tips.empty? %>
+    <li>This question has no tips</li>
+  <% else%>
+    <% @question.tips.each do |tip| %>
+    <li><%= tip.content %></li>
+    <% end %>
+  <% end%>
+</ul>
+
+<h5>Created at:</h5> 
+<ul> 
+  <li><%= time_ago_in_words(@question.created_at) %> ago</li>
+</ul>
+
+<h5>Updated at:</h5> 
+<ul> 
+  <li><%= time_ago_in_words(@question.updated_at) %> ago</li>
+</ul>
+
 
 <div>
   <div>
@@ -15,47 +58,4 @@
     <a href="/delete_question/<%= @question.id %>">Delete question</a>
   </div>
 </div>
-
-<dl>
-  <dt>Question</dt>
-  <dd><%= @question.question %></dd>
-  
-  <dt>Categories:</dt>
-  
-  <% if @question.categories.empty? %>
-    <dd>This question has no categories</dd>
-  <% else%>
-    <% @question.categories.each do |category| %>
-    <dd><%= category.category_name %></dd>
-    <% end %>
-  <% end%>
-  
-  <dt>Reflexion Questions:</dt>
-  
-  <% if @question.reflexion_questions.empty? %>
-    <dd>This question has no reflexion questions</dd>
-  <% else%>
-    <% @question.reflexion_questions.each do |rq| %>
-    <dd><%= rq.reflexion_question %></dd>
-    <% end %>
-  <% end%>
-  
-  <dt>Tips:</dt>
-  <% if @question.tips.empty? %>
-    <dd>This question has no tips</dd>
-  <% else%>
-    <% @question.tips.each do |tip| %>
-    <dd><%= tip.content %></dd>
-    <% end %>
-  <% end%>
-
-
-  
-  <dt>Created at</dt>
-  <dd><%= time_ago_in_words(@question.created_at) %> ago</dd>
-
-  <dt>Updated at</dt>
-  <dd><%= time_ago_in_words(@question.updated_at) %> ago</dd>
-  
-</dl>
 

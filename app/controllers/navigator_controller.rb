@@ -9,7 +9,7 @@ class NavigatorController < ApplicationController
     interview_type = params.fetch("interview_type")
     #need to add intelligence here / add interview type!
     questions =Question.where.not({ :id => current_user.user_questions.pluck(:question_id) })
-    @q1 = questions.at(0).question
+    @q1 = questions.at(0)
     render("navigation/full_mock.html.erb")
   end
 

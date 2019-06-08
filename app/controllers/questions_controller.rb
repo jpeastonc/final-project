@@ -41,7 +41,8 @@ class QuestionsController < ApplicationController
 
   def prefilled_form
     @question = Question.where({ :id => params.fetch("id_to_prefill") }).first
-
+    @tips = @question.tips
+    @reflection_question = @question.reflexion_questions
     render("question_templates/prefilled_form.html.erb")
   end
 
@@ -50,9 +51,24 @@ class QuestionsController < ApplicationController
 
     @question.question = params.fetch("question")
 
+
     if @question.valid?
       @question.save
-
+      #Delete old categories
+      old_categories = QuestionCategory.where({ :question_id => @question.id  })
+      
+      old_categories.each  do |cat|
+        cat.destroy
+      end
+      
+      categories = params.fetch("categories")
+      categories.each do |category_id|
+        qc=QuestionCategory.new
+        qc.category_id=category_id
+        qc.question_id=@question.id
+        qc.save
+      end
+      
       redirect_to("/questions/" + @question.id.to_s, { :notice => "Question updated successfully." })
     else
       render("question_templates/prefilled_form.html.erb")

@@ -55,9 +55,33 @@ class ReflexionQuestionsController < ApplicationController
 
   def remove_row
     @reflexion_question = ReflexionQuestion.where({ :id => params.fetch("id_to_remove") }).first
-
     @reflexion_question.destroy
-
     redirect_to("/reflexion_questions", { :notice => "Reflexion question deleted successfully." })
   end
+  
+  def add_rq_to_question
+    
+    @reflexion_question = ReflexionQuestion.new
+    @reflexion_question.question_id = params.fetch("question_id")
+    @reflexion_question.reflexion_question = params.fetch("new_reflection_question")
+    @reflexion_question.user_id = params.fetch("user_id")
+
+    if @reflexion_question.valid?
+      @reflexion_question.save
+      redirect_to("/existing_question_form/" + @reflexion_question.question_id.to_s, { :notice => "Reflexion question updated successfully." })
+    else
+      render("/add_reflection_question")
+    end
+    
+  end
+  
+  
+  def eliminate_reflection_question
+    @reflexion_question = ReflexionQuestion.where({ :id => params.fetch("id") }).first
+    question_id = @reflexion_question.question_id
+    @reflexion_question.destroy
+    redirect_to("/existing_question_form/"+question_id.to_s, { :notice => "Reflexion question deleted successfully." })
+  end
+  
+  
 end

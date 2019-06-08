@@ -60,4 +60,28 @@ class QuestionTipsController < ApplicationController
 
     redirect_to("/question_tips", { :notice => "Question tip deleted successfully." })
   end
+  
+  def add_tip_to_question
+    @tip = QuestionTip.new
+    @tip.question_id = params.fetch("question_id")
+    @tip.content = params.fetch("new_tip")
+    @tip.user_id = params.fetch("user_id")
+
+    if @tip.valid?
+      @tip.save
+      redirect_to("/existing_question_form/" + @tip.question_id.to_s, { :notice => "Tip added successfully." })
+    else
+      render("/add_tip_to_question")
+    end
+    
+  end
+  
+  def eliminate_tip
+    @tip = QuestionTip.where({ :id => params.fetch("id") }).first
+    question_id = @tip.question_id
+    @tip.destroy
+    redirect_to("/existing_question_form/"+question_id.to_s, { :notice => "Reflexion question deleted successfully." })
+  end
+  
+  
 end

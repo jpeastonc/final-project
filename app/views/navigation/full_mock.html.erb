@@ -1,14 +1,335 @@
-<div class="main_question"><p><%=@q1%></p></div>
 
-<!–– Add here evalation-->
+<div class="row">
+  <div class="col text-center"
+  <div class="main_question"><h1>Question:<%=@q1.question%></h1></div>
+  </div>
+</div>
 
 
-  <div class="timer_container">
-      <p>Timmer</p>
-      <p id="timer">
-          <span id="timer-mins"></span>
-          <span id="timer-secs"></span>
-      </p>
+  <div class="row">
+      <div class="select col-md-5 offset-md-4">
+        <label for="audioSource">Audio source: </label><select id="audioSource"></select>
+      </div>
+  </div>
+    
+  <div class="row">
+      <div class="select col-md-5 offset-md-4">
+        <label for="videoSource">Video source: </label><select id="videoSource"></select>
+      </div>
   </div>
   
+  <div class="row">
+    <div class="col-md-4 offset-md-4">
+        <video id="video" height="300" autoplay></video>
+    </div>
+    
+  </div>  
+  
+  <div class="row">
+    <div class="col-md-3"></div>
+    <div class="col-md-2">
+      <button id="captureVideo-button" type="button" class="btn btn-success  btn-block">Start Recording</button> 
+    </div>
+    <div class="col-md-2">
+      <button id="stop-button" type="button" class="btn btn-danger  btn-block">Stop Recording</button>
+    </div>
+    <div class="col-md-2">
+      <button id="tips-button" type="button" class="btn btn-danger  btn-block">Get Tips!</button>
+      <button id="screenshot-button" type="button" class="btn btn-dark" style="display: none;">Screen Shot</button>
+    </div>
+  </div>
+  
+  <div class="row">
+    <div class="col-md-4 offset-md-4">
+        <div class="timer_container">
+        <a>Timmer: </a>
+        <a id="timer">
+            <span id="timer-mins"></span>
+            <span id="timer-secs"></span>
+        </a>
+        </div>
+    </div>
+  </div> 
+
+
+<div class="row">
+  <div class="col-md-4 offset-md-4">
+  <p id="recorded_video_title"></p>
+  </div>
+</div>
+
+<div class="row ">
+  <div class="col-md-4 offset-md-4">
+    <img src="" id="screenshot" height="300" style="display:none">
+    <video src="" id="videorecorded" height="300" style="display:none">
+    <canvas style="display:none;"></canvas>
+  </div>
+</div>  
+
+<div class="row">
+  <div class="col-md-3"></div>
+  <div class="col-md-2">
+    <button id="repeatvideo-button" type="button" class="btn btn-secondary  btn-block" style="display:none">Repeat Video</button>
+  </div>
+  <div class="col-md-2">
+    <button id="savevideo-button" type="button" class="btn btn-success  btn-block" style="display:none">Save Answer</button>
+  </div> 
+  <div class="col-md-2">
+    <a id="download" class="btn btn-dark  btn-block" tabindex="-1" role="button" style="display:none">Download Video</a>
+  </div> 
+  <div class="col-md-3"></div>
+</div>  
+
+
+
+<div class="row">
+    <div class="col-md-6 offset-md-3" id="tips_table" style="display:none">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th style="width: 20%">#</th>
+            <th style="width: 80%">List of tips:</th>
+          </tr>
+        </thead>
+      
+        <tbody>
+          <% if @q1.tips.empty?  %>
+            <tr>
+                <td></td>
+                <td>There are no tips for this questions</td>
+            </tr>
+          <% end %>
+          
+          <% @q1.tips.each_with_index do |tip,index| %>
+             <tr>
+               <td><%=index+1%></td>
+               <td><%=tip.content%></td>
+             </tr>
+          <% end %> 
+        </tbody>
+      </table>
+  </div>
+  <div class="col-md-3"></div>
+</div>
+
+<div class="row">
+    <div class="col-md-6 offset-md-3" id="reflection_table" style="display:none">
+      <table class="table table-striped"  >
+        <thead>
+          <tr>
+            <th style="width: 20%">#</th>
+            <th style="width: 80%">List of reflection questions:</th>
+          </tr>
+        </thead>
+      
+        <tbody>
+          <% if @q1.reflexion_questions.empty?  %>
+            <tr>
+                <td></td>
+                <td>There are no reflection questions for this questions</td>
+            </tr>
+          <% end %>
+          
+          <% @q1.reflexion_questions.each_with_index do |rq,index| %>
+             <tr>
+               <td><%=index+1%></td>
+               <td><%=rq.reflexion_question%></td>
+             </tr>
+          <% end %> 
+        </tbody>
+      </table>
+  </div>
+  <div class="col-md-3"></div>
+</div>
+
+
+
+
+
+
+  
+  <!-- Need to check this so it doesn't load on every page!
   <script src="/app/assets/javascripts/timer.js"></script>
+  -->
+  
+  
+  <script>
+    const videoElement = document.querySelector('video');
+    const audioSelect = document.querySelector('select#audioSource');
+    const videoSelect = document.querySelector('select#videoSource');
+    const recorded_video_title = document.getElementById('recorded_video_title');
+    const video_recorder_div = document.getElementById('video_recorder_div');
+    const repeatvideobutton = document.getElementById('repeatvideo-button');
+    const savevideobutton = document.getElementById('savevideo-button');
+    const tips_table = document.getElementById('tips_table');
+    const reflection_table = document.getElementById('reflection_table');
+    const tipsbutton = document.getElementById('tips-button');
+
+    
+    let shouldStop = false;
+    let stopped = false;
+    let capturingvideo = false;
+    const downloadLink = document.getElementById('download');
+    const stopButton = document.getElementById('stop-button');
+  
+    let usermedia;      //Here I create the user media for getting info from webcam
+    let mediaRecorder;  //Here I create my media recorder (I initialize it when I start recording)
+    const videorecorded = document.getElementById('videorecorded');
+    
+    
+
+
+    
+    navigator.mediaDevices.enumerateDevices().then(gotDevices).then(getStream).catch(handleError);
+    audioSelect.onchange = getStream;
+    videoSelect.onchange = getStream;
+    
+    function gotDevices(deviceInfos) {
+      for (let i = 0; i !== deviceInfos.length; ++i) {
+        const deviceInfo = deviceInfos[i];
+        const option = document.createElement('option');
+        option.value = deviceInfo.deviceId;
+        if (deviceInfo.kind === 'audioinput') {
+          option.text = deviceInfo.label ||
+            'microphone ' + (audioSelect.length + 1);
+          audioSelect.appendChild(option);
+        } else if (deviceInfo.kind === 'videoinput') {
+          option.text = deviceInfo.label || 'camera ' +
+            (videoSelect.length + 1);
+          videoSelect.appendChild(option);
+        } else {
+          console.log('Found another kind of device: ', deviceInfo);
+        }
+      }
+    }
+    
+    function getStream() {
+      if (window.stream) {
+        window.stream.getTracks().forEach(function(track) {
+          track.stop();
+        });
+      }
+    
+      const constraints = {
+        audio: {
+          deviceId: {exact: audioSelect.value}
+        },
+        video: {
+          deviceId: {exact: videoSelect.value}
+        }
+      };
+      
+      
+      navigator.mediaDevices.getUserMedia(constraints).then(gotStream).catch(handleError);
+    }
+    
+    function gotStream(stream) {
+      window.stream = stream; // make stream available to console
+      videoElement.srcObject = stream;
+      usermedia = stream;
+    }
+    
+    function handleError(error) {
+      console.error('Error: ', error);
+    }
+    
+    
+     const screenshotButton = document.getElementById('screenshot-button');
+     const captureVideoButton = document.getElementById('captureVideo-button');
+     const img = document.getElementById('screenshot');
+     const video = document.getElementById('video');
+     const canvas = document.createElement('canvas');
+     
+     screenshotButton.onclick = video.onclick = function() {
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
+        canvas.getContext('2d').drawImage(video, 0, 0);
+        // Other browsers will fall back to image/png
+        img.src = canvas.toDataURL('image/webp');
+        
+    };
+    
+    tipsbutton.onclick = function() {
+        if( tips_table.style.display == "none"){
+          tips_table.style.display = "block";
+          tipsbutton.innerHTML = "Hide Tips!" 
+        }
+        else { 
+          tips_table.style.display = "none"
+          tipsbutton.innerHTML = "Get Tips!"
+        }
+    };
+    
+    
+    captureVideoButton.onclick = function() {
+          capturingvideo=true;
+          videoElement.style.display = "inline";
+          recorded_video_title.style.display = "none";
+          videorecorded.style.display = "none";
+          repeatvideobutton.style.display = "none";
+          savevideobutton.style.display = "none";
+          downloadLink.style.display = "none";
+          reflection_table.style.display = "none";
+          handleSuccess(stream)
+          start_timer();
+    };
+    
+    stopButton.onclick =function() {
+        if(capturingvideo) {mediaRecorder.stop();}
+        capturingvideo = false;
+        stop_timer();
+        recorded_video_title.style.display = "inline";
+        recorded_video_title.innerHTML = "Here is your Answer"
+        videorecorded.style.display = "inline";
+        videoElement.style.display = "none";
+        repeatvideobutton.style.display = "inline";
+        savevideobutton.style.display = "inline";
+        downloadLink.style.display = "inline-block";
+        tips_table.style.display = "none"
+        tipsbutton.innerHTML = "Get Tips!"
+        reflection_table.style.display = "block";
+      
+      //usermedia.getTracks().forEach(function(track) {track.stop();});
+      };
+      
+    repeatvideobutton.onclick =function() {
+      videorecorded.play();
+      };
+      
+    savevideobutton.onclick = function() {
+      //
+      };
+    
+    
+    var handleSuccess = function(stream) {
+      const options = {mimeType: 'video/webm'};
+      const recordedChunks = [];
+      mediaRecorder = new MediaRecorder(stream, options);
+      console.log("handlesuccess")
+  
+      mediaRecorder.addEventListener('dataavailable', function(e) {
+            if (e.data.size > 0) {
+              recordedChunks.push(e.data);
+              console.log("add")
+            }
+      
+            if(shouldStop === true && stopped === false) {
+              mediaRecorder.stop();
+              stopped = true;
+              console.log("stopped")
+            }
+          });
+      
+      mediaRecorder.addEventListener('stop', function() {
+            downloadLink.href = URL.createObjectURL(new Blob(recordedChunks));
+            downloadLink.download = 'acetest.webm';
+            videorecorded.src = downloadLink.href;
+            videorecorded.play();
+          });
+      
+          mediaRecorder.start();
+      };
+
+    
+    
+  </script>

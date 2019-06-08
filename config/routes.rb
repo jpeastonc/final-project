@@ -3,6 +3,15 @@ Rails.application.routes.draw do
   match("/home", { :controller => "navigator", :action => "home", :via => "get" })
   match("/full_mock/:interview_type", { :controller => "navigator", :action => "full_mock", :via => "get" })
   
+  match("/add_reflection_question", { :controller => "reflexion_questions", :action => "add_rq_to_question", :via => "post" })
+  match("/eliminate_reflection_question/:id", { :controller => "reflexion_questions", :action => "eliminate_reflection_question", :via => "get" })
+
+  
+  
+  match("/add_tip_to_question", { :controller => "question_tips", :action => "add_tip_to_question", :via => "post" })
+  match("/eliminate_tip/:id", { :controller => "question_tips", :action => "eliminate_tip", :via => "get" })
+
+  
   # Routes for the User question resource:
 
   # CREATE

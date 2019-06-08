@@ -7,41 +7,136 @@
 <%= render("question_templates/validation_failures.html.erb") %>
 
 <form action="/update_question_record/<%= @question.id %>" method="post">
-  <div>
-    <label for="question">Question</label>
-    <input type="text" id="question" name="question" value="<%= @question.question %>">
+  <div class="form-row">
+    <div class="input-group col-md-4">
+      <div class="input-group-prepend">
+        <span class="input-group-text">Question</span>
+      </div>
+      <textarea class="form-control" name="question" aria-label="With textarea" ><%= @question.question %></textarea>
+    </div>  
+    <div class="input-group col-md-4">
+      <div class="input-group-prepend">
+        <span class="input-group-text">Categories</span>
+      </div>
+      <select class="custom-select" name="categories[]" multiple>
+        <% Category.all.each do |category| %>
+          <option value="<%=category.id%>"><%=category.category_name%></option>
+        <% end %>  
+      </select>
+    </div>
+    
+    <div class="input-group col-md-4"> 
+        <button class="btn btn-outline-secondary">Update Question</button>
+    </div>
   </div>
-  
-  <div>
-    <label for="categories">Categories</label>
-    <select multiple name="categories">
-    <% Category.all.each do |category| %>
-      <option value="<%=category.id%>"><%=category.category_name%></option>
-    <% end %>  
-    </select>
-    <p>(Select all that apply)</p>
-  </div>
-
-  <button>
-    Update question
-  </button>
 </form>
 
-<form action="/add_tip_to_question/<%= @question.id %>" method="post">
-  <div>
-    <label for="new_tip">Tip</label>
-    <input type="text" id="new_tip" name="new_tip" value="Write here your tip">
-  </div>
-  
-  <div>
-    <label for="new_tip">Tip</label>
-    <input type="text" id="new_tip" name="new_tip" value="Write here your tip">
-  </div>
 
-  <button>
-    Add tip
-  </button>
-</form>
+</hr>
+
+<p></p><p></p>
+
+<hr>
+
+    <form action="/add_tip_to_question" method="post">
+    <input type="hidden" id="user_id" name="user_id" value="<%=current_user.id%>">
+    <input type="hidden" id="question_id" name="question_id" value="<%= @question.id %>">
+      <div class="form-row">
+        <div class="input-group col-md-8">
+          <input type="text" class="form-control" id="new_tip" name="new_tip" placeholder="Write here your tip...">
+        </div>
+        <div class="input-group col-md-4">
+          <button class="btn btn-outline-secondary">Add tip</button>
+        </div>
+      </div>
+    </form>
+
+
+<p></p><p></p>
+
+      <form action="/add_reflection_question" method="post">
+      <input type="hidden" id="user_id" name="user_id" value="<%=current_user.id%>">
+      <input type="hidden" id="question_id" name="question_id" value="<%= @question.id %>">
+      <div class="form-row">
+        <div class="input-group col-md-8">
+          <input type="text" class="form-control" id="new_reflexion_question" name="new_reflection_question" placeholder="Write here your reflexion question...">
+        </div>
+        <div class="input-group col-md-4">
+          <button class="btn btn-outline-secondary">Add Reflexion Question</button>
+        </div>
+      </div>
+    </form>
+
+   
+<p></p><p></p>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th style="width: 12.5%">#</th>
+      <th style="width: 75%">List of current Tips</th>
+      <th style="width: 12.5%">Action</th>
+    </tr>
+  </thead>
+  
+  <tbody>
+    <% if @tips.empty?  %>
+      <tr>
+        <td></td>
+        <td>There are no tips</td>
+        <td></td>
+      </tr>
+    <% end %>
+    
+    <% @tips.each_with_index do |tip,index| %>
+       <tr>
+          <td><%=index+1%></td>
+          <td><%=tip.content%></td>
+       <% if current_user.id==tip.user_id %>
+         <td><a href="/eliminate_tip/<%=tip.id%>">Eliminate</a></td>
+       <% else %>
+         <td></td>
+       <% end %>
+       </tr>
+    <% end %> 
+  </tbody>
+</table>
+
+<div style="height:10px"></div>
+
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th style="width: 12.5%">#</th>
+      <th style="width: 75%">List of current Reflection Questions</th>
+      <th style="width: 12.5%">Action</th>
+  </tr>
+  </thead>
+  
+  <tbody>
+    <% if @reflection_question.empty?  %>
+      <tr>
+          <td></td>
+          <td>There are no reflection questions</td>
+          <td></td>
+      </tr>
+    <% end %>
+    
+    <% @reflection_question.each_with_index do |rq,index| %>
+       <tr>
+         <td><%=index+1%></td>
+         <td><%=rq.reflexion_question%></td>
+       <% if current_user.id==rq.user_id %>
+          <td><a href="/eliminate_reflection_question/<%=rq.id%>">Eliminate</a></td>
+       <% else %>
+          <td></td>
+       <% end %>
+       </tr>
+    <% end %> 
+  </tbody>
+  
+</table>
 
 
 <hr>

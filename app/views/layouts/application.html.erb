@@ -22,15 +22,15 @@
 
     <!-- START BOOTSTRAP -->
     <!-- Connect Bootstrap CSS -->
-    <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"> -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 
     <!-- Connect Bootstrap JavaScript -->
-    <!-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script> -->
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script> -->
-    <!-- <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script> -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
     <!-- Make it responsive to small screens -->
-    <!-- <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- END BOOTSTRAP -->
     
     
@@ -38,49 +38,42 @@
     
   <!-- Navigation bar -->
   
-  <div class="container">
-    <nav class="navbar navbar-inverse">
-          <div class="container">
-            <div class="navbar-header">
-              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-              </button>
-              <a class="navbar-brand" href="/home">Mock Interviewer</a>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <a class="navbar-brand" href="#" style="padding-top:0;">Mock Interviewer</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav">
+          <li class="nav-item active">
+            <a class="nav-link" href="/home">Home <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/questions">Questions</a>
+          </li>
+          <% if user_signed_in? %>
+            <li><%= link_to 'Edit profile', edit_user_registration_path, :class => 'nav-link' %></li>
+            <li>  <%= link_to "Logout", destroy_user_session_path, method: :delete, :class => 'nav-link'  %></li>
+          <% else %>
+            <li> <%= link_to "Sign up", new_user_registration_path, :class => 'nav-link'  %></li>
+            <li><%= link_to "Login", new_user_session_path, :class => 'nav-link'  %></li>
+          <% end %>
+          
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Dropdown link
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+              <a class="dropdown-item" href="#">Action</a>
+              <a class="dropdown-item" href="#">Another action</a>
+              <a class="dropdown-item" href="#">Something else here</a>
             </div>
-            <div class="navbar-collapse collapse">
-              <ul class="nav navbar-nav navbar-right">
-                <li class="active"><a href="/home">Home</a></li>
-                <% if user_signed_in? %>
-                <li><%= link_to 'Edit profile', edit_user_registration_path, :class => 'navbar-link' %></li>
-                <li>  <%= link_to "Logout", destroy_user_session_path, method: :delete, :class => 'navbar-link'  %></li>
-                <% else %>
-                <li> <%= link_to "Sign up", new_user_registration_path, :class => 'navbar-link'  %></li>
-                <li><%= link_to "Login", new_user_session_path, :class => 'navbar-link'  %></li>
-                <% end %>
-                
-                
-                
-                <li class="dropdown">
-                  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
-                  <ul class="dropdown-menu">
-                    <li><a href="#">Action</a></li>
-                    <li><a href="#">Another action</a></li>
-                    <li><a href="#">Something else here</a></li>
-                    <li role="separator" class="divider"></li>
-                    <li class="dropdown-header">Nav header</li>
-                    <li><a href="#">Separated link</a></li>
-                    <li><a href="#">One more separated link</a></li>
-                  </ul>
-                </li>
-              </ul>
-            </div><!--/.nav-collapse -->
-          </div>
-        </nav>
-  </div>
+          </li>
+        </ul>
+      </div>
+  </nav>
   
+</nav>
 
   </head>
 
