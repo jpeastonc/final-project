@@ -55,9 +55,7 @@ class UserQuestionsController < ApplicationController
 
   def remove_row
     @user_question = UserQuestion.where({ :id => params.fetch("id_to_remove") }).first
-
     @user_question.destroy
-
-    redirect_to("/user_questions", { :notice => "User question deleted successfully." })
+    redirect_to("/question_history", { :notice => "User question deleted successfully." })
   end
 end

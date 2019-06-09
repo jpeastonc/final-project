@@ -1,7 +1,7 @@
 
 <div class="row">
   <div class="col text-center"
-  <div class="main_question"><h1>Question:<%=@q1.question%></h1></div>
+  <div class="main_question"><h1>Question:<%=@cq.question%></h1></div>
   </div>
 </div>
 
@@ -72,7 +72,9 @@
     <button id="repeatvideo-button" type="button" class="btn btn-secondary  btn-block" style="display:none">Repeat Video</button>
   </div>
   <div class="col-md-2">
-    <button id="savevideo-button" type="button" class="btn btn-success  btn-block" style="display:none">Save Answer</button>
+    <form action="/save_user_question" method="post">
+      <input type="hidden" id="srcvideotosave" name="srcvideotosave" value="">
+      <button id="savevideo-button" class="btn btn-success  btn-block" style="display:none">Save Answer</button>
   </div> 
   <div class="col-md-2">
     <a id="download" class="btn btn-dark  btn-block" tabindex="-1" role="button" style="display:none">Download Video</a>
@@ -81,8 +83,36 @@
 </div>  
 
 
+<div class="row mt-3" id="rating_row" style="display:none">
+  <div class="col-md-3"></div>
+  <div class="input-group col-6">
+      <div class="input-group-prepend">
+        <label class="input-group-text" for="n_questions">How would you rate this question?</label>
+      </div>
+      <select class="custom-select" id="rating" name="rating">
+        <option selected>Choose...</option>
+        <option value="1">One</option>
+        <option value="2">Two</option>
+        <option value="3">Three</option>
+        <option value="4">Four</option>
+        <option value="4">Five</option>
+      </select>
+  </div>
+  <div class="col-md-3"></div>
+</div>  
 
-<div class="row">
+<div class="row mt-3" id="comment_row" style="display:none">
+  <div class="col-md-3"></div>
+  <div class="col-md-6">
+    <input type="text" class="form-control" id="comment" name="comment" placeholder="Add a comment here...">
+    </form>
+  </div>
+  <div class="col-md-3"></div>
+</div>    
+
+
+
+<div class="row mt-3">
     <div class="col-md-6 offset-md-3" id="tips_table" style="display:none">
       <table class="table table-striped">
         <thead>
@@ -93,14 +123,14 @@
         </thead>
       
         <tbody>
-          <% if @q1.tips.empty?  %>
+          <% if @cq.tips.empty?  %>
             <tr>
                 <td></td>
                 <td>There are no tips for this questions</td>
             </tr>
           <% end %>
           
-          <% @q1.tips.each_with_index do |tip,index| %>
+          <% @cq.tips.each_with_index do |tip,index| %>
              <tr>
                <td><%=index+1%></td>
                <td><%=tip.content%></td>
@@ -112,7 +142,8 @@
   <div class="col-md-3"></div>
 </div>
 
-<div class="row">
+
+<div class="row mt-3">
     <div class="col-md-6 offset-md-3" id="reflection_table" style="display:none">
       <table class="table table-striped"  >
         <thead>
@@ -123,14 +154,14 @@
         </thead>
       
         <tbody>
-          <% if @q1.reflexion_questions.empty?  %>
+          <% if @cq.reflexion_questions.empty?  %>
             <tr>
                 <td></td>
                 <td>There are no reflection questions for this questions</td>
             </tr>
           <% end %>
           
-          <% @q1.reflexion_questions.each_with_index do |rq,index| %>
+          <% @cq.reflexion_questions.each_with_index do |rq,index| %>
              <tr>
                <td><%=index+1%></td>
                <td><%=rq.reflexion_question%></td>
@@ -148,9 +179,41 @@
 
 
   
-  <!-- Need to check this so it doesn't load on every page!
-  <script src="/app/assets/javascripts/timer.js"></script>
-  -->
+  
+  <script>
+  var beginingTime; 
+
+  var timer;
+
+    function start_timer() {
+      console.log("timer begining")  
+      beginingTime = new Date().getTime();
+      timer = setInterval(function() {
+                    let now = new Date().getTime();
+                    let t = now - beginingTime;
+                    console.log("timer set variables") 
+                    
+                    if (t >= 0) {
+                        let hours = Math.floor((t % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                        let mins = Math.floor((t % (1000 * 60 * 60)) / (1000 * 60));
+                        let secs = Math.floor((t % (1000 * 60)) / 1000);
+                    
+                        document.getElementById("timer-mins").innerHTML = ("0"+mins).slice(-2) +"<span class='time_label'>mins</span>";
+                    
+                        document.getElementById("timer-secs").innerHTML = ("0"+secs).slice(-2) + "<span class='time_label'>secs</span>";
+                    
+                                 } 
+                    else { document.getElementById("timer").innerHTML = "Error";}
+                }, 1000);
+        }
+        
+        function stop_timer() {
+            clearInterval(timer);
+            console.log("timer stop") 
+        }
+  
+  
+  </script>
   
   
   <script>
@@ -164,7 +227,12 @@
     const tips_table = document.getElementById('tips_table');
     const reflection_table = document.getElementById('reflection_table');
     const tipsbutton = document.getElementById('tips-button');
-
+    const srcvideotosave = document.getElementById('srcvideotosave');
+    const rating_row = document.getElementById('rating_row');
+    const comment_row = document.getElementById('comment_row');
+    
+    
+  
     
     let shouldStop = false;
     let stopped = false;
@@ -270,6 +338,8 @@
           savevideobutton.style.display = "none";
           downloadLink.style.display = "none";
           reflection_table.style.display = "none";
+          rating_row.style.display = "none";
+          comment_row.style.display = "none";
           handleSuccess(stream)
           start_timer();
     };
@@ -288,7 +358,9 @@
         tips_table.style.display = "none"
         tipsbutton.innerHTML = "Get Tips!"
         reflection_table.style.display = "block";
-      
+        rating_row.style.display = "flex";
+        comment_row.style.display = "flex";
+        srcvideotosave.value= videorecorded.src
       //usermedia.getTracks().forEach(function(track) {track.stop();});
       };
       
@@ -296,9 +368,6 @@
       videorecorded.play();
       };
       
-    savevideobutton.onclick = function() {
-      //
-      };
     
     
     var handleSuccess = function(stream) {

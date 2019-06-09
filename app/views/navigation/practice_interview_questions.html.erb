@@ -1,0 +1,47 @@
+<form action="/run_practice_question/" method="post">
+  <div class="form-row mt-3">
+    <div class="input-group col-3"></div>
+    <div class="input-group col-6"> <H1>Select your preferences:</H1></div>
+    <div class="input-group col-3"></div>
+  </div>  
+  <div class="form-row mt-3">
+    <div class="input-group col-3"></div>
+    <div class="input-group col-6">
+        <div class="input-group-prepend">
+        <label class="input-group-text" for="n_questions"># Questions</label>
+        </div>
+      <select class="custom-select" id="n_questions" name="n_questions">
+        <option selected>Choose...</option>
+        <option value="1">One</option>
+        <option value="2">Two</option>
+        <option value="3">Three</option>
+        <option value="4">Four</option>
+      </select>
+    </div>
+    <div class="input-group col-3"></div>
+  </div>
+  
+  <div class="form-row mt-3">
+    <div class="input-group col-3"></div>
+    <div class="input-group col-6">
+      <div class="input-group-prepend">
+        <span class="input-group-text">Categories</span>
+      </div>
+      <select class="custom-select" name="categories[]" multiple>
+        <% Category.all.each do |category| %>
+          <option value="<%=category.id%>"><%=category.category_name%></option>
+        <% end %>  
+      </select>
+    </div>
+    <div class="input-group col-3"></div>
+  </div>
+  
+  <div class="form-row mt-3">
+    <div class="input-group col-3"></div>
+    <div class="input-group col-6"> 
+        <button class="btn btn-outline-secondary">Start Practice</button>
+    </div>
+    <div class="input-group col-3"></div>
+  </div>
+  
+</form>

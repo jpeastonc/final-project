@@ -1,10 +1,17 @@
 Rails.application.routes.draw do
-  
+  match("/", { :controller => "navigator", :action => "home", :via => "get" })
   match("/home", { :controller => "navigator", :action => "home", :via => "get" })
   match("/full_mock/:interview_type", { :controller => "navigator", :action => "full_mock", :via => "get" })
+  match("/save_user_question", { :controller => "navigator", :action => "save_user_question", :via => "post" })
+  
+  match("/question_history", { :controller => "navigator", :action => "question_history", :via => "get" })
+  match("/practice_interview_questions", { :controller => "navigator", :action => "practice_interview_questions", :via => "get" })
+  match("/run_practice_question", { :controller => "navigator", :action => "run_practice_question", :via => "post" })
+
   
   match("/add_reflection_question", { :controller => "reflexion_questions", :action => "add_rq_to_question", :via => "post" })
   match("/eliminate_reflection_question/:id", { :controller => "reflexion_questions", :action => "eliminate_reflection_question", :via => "get" })
+
 
   
   

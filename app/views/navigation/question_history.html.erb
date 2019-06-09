@@ -1,0 +1,39 @@
+<table class="table table-striped mt-3">
+  <thead>
+    <tr>
+      <th style="width: 5%">#</th>
+      <th style="width: 40%">Questions</th>
+      <th style="width: 5%">Evaluation</th>
+      <th style="width: 40%">Own Comments</th>
+      <th style="width: 10%">Action</th>
+  </tr>
+  </thead>
+  
+  <tbody>
+    <% if @user_questions.empty?  %>
+      <tr>
+          <td></td>
+          <td>There are no historical questions </td>
+          <td></td>
+          <td></td>
+          <td></td>
+      </tr>
+    <% end %>
+    
+    <% @user_questions.each_with_index do |uq,index| %>
+       <tr>
+         <td><%=index+1%></td>
+         <td><%=uq.question.question%></td>
+         <% if !uq.evaluation.nil? %>
+           <td><%=uq.evaluation.rating%></td>
+           <td><%=uq.evaluation.comment%></td>
+         <% else%>
+           <td></td>
+           <td></td>
+         <% end %>
+         <td><a href="/delete_user_question/<%=uq.id%>">Eliminate</a></td>
+       </tr>
+    <% end %> 
+  </tbody>
+  
+</table>

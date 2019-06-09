@@ -8,7 +8,7 @@
 
 <hr>
 
-<table>
+<table class="table table-striped">
   <tr>
     <th>
       ID
@@ -26,8 +26,8 @@
       Updated at
     </th>
 
-    <th>
-    </th>
+    <th></th>
+    <th></th>
   </tr>
 
   <% @questions.each do |question| %>
@@ -49,10 +49,16 @@
     </td>
 
     <td>
-      <a href="/questions/<%= question.id %>">
-        Show details
+      <a href="/existing_question_form/<%= question.id %>">
+        Edit  
       </a>
     </td>
+    <td>
+      <a href="/delete_question/<%= question.id %>">
+        Delete
+      </a>
+    </td>
+    
   </tr>
   <% end %>
 </table>
