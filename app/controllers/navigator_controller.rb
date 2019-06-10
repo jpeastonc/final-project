@@ -29,19 +29,19 @@ class NavigatorController < ApplicationController
     session[:q4_id] = selected_questions[3].id
     @cq=selected_questions[0]
     session[:question_number] = 1
+    session[:n_questions] = 4
     render("navigation/answer_question.html.erb")
   end
   
   def save_user_question
      
-     srcvideotosave = params.fetch("srcvideotosave")
      uq = UserQuestion.new
      evaluation = Evaluation.new
      
      #save user question
      session[:question_number] = session[:question_number] + 1
      
-    if(session[:question_number]<=4)
+    if(session[:question_number]<=session[:n_questions])
         if(session[:question_number] ==2)
           cs_id = session[:q1_id]
           @cq= Question.where({ :id => session[:q2_id] }).first
@@ -69,7 +69,12 @@ class NavigatorController < ApplicationController
           uq.question_id = cs_id
           uq.user_id = current_user.id
           uq.src_video=params.fetch("srcvideotosave")
-          uq.save
+          if (uq.save)
+            evaluation.comment = params.fetch("comment")
+            evaluation.rating = params.fetch("rating")
+            evaluation.user_question_id = uq.id
+            evaluation.save
+          end
           session[:question_number] = 0
           render("navigation/end_mock.html.erb")
     end
@@ -80,14 +85,18 @@ class NavigatorController < ApplicationController
     render("navigation/practice_interview_questions.html.erb")
   end
   
+  
+  
+  
   def run_practice_question
     categories_ids = params.fetch("categories")
-    n_questions = params.fetch("n_questions")
+    n_questions = params.fetch("n_questions").to_i
     
     categories = Category.where({:id => categories_ids})
     
-    #Create hash and add all the questions
-    questions = Hash.new
+    #Create empty active record and add all the questions
+    questions = Question.none
+    
     categories.each do |cat|
       questions.merge(cat.questions_in_category)
     end
@@ -96,9 +105,9 @@ class NavigatorController < ApplicationController
     possible_questions = non_repeated_questions
     
     #check if there are at least 4 questions if not just pick 4 random no mater if they are repeated
-    if(non_repeated_questions.count()<n_questions)
-      if(questions.count()<n_questions)
-        Question.all
+    if(non_repeated_questions.count<n_questions)
+      if(questions.count<n_questions)
+        possible_questions = Question.all
       else
         possible_questions = questions
       end
@@ -107,11 +116,19 @@ class NavigatorController < ApplicationController
     #Pick n questions
     selected_questions = possible_questions.to_a.sample(n_questions)
     
-    selected_questions.each_with_index do |q,index|
-      session[index] = q.id
+    session[:q1_id] = selected_questions[0].id
+    if(n_questions>=2)
+      session[:q2_id] = selected_questions[1].id
     end
-
+    if(n_questions>=3)
+      session[:q3_id] = selected_questions[2].id
+    end
+    if(n_questions>=4)
+      session[:q4_id] = selected_questions[3].id
+    end
+    
     @cq=selected_questions[0]
+    session[:n_questions] = n_questions
     session[:question_number] = 1
     render("navigation/answer_question.html.erb")
     

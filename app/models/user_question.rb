@@ -15,5 +15,6 @@ class UserQuestion < ApplicationRecord
   belongs_to :question
   belongs_to :user
   has_one :evaluation, :dependent => :destroy
+  mount_uploader :src_video,  VideoUploader
   
 end
