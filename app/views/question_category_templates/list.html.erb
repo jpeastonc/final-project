@@ -11,7 +11,7 @@
 <table>
   <tr>
     <th>
-      ID
+      #
     </th>
 
     <th>
@@ -32,12 +32,16 @@
 
     <th>
     </th>
+    
+    <th>
+    </th>
+    
   </tr>
 
-  <% @question_categories.each do |question_category| %>
+  <% @question_categories.each_with_index do |question_category,index| %>
   <tr>
     <td>
-      <%= question_category.id %>
+      <%= index %>
     </td>
 
     <td>
@@ -61,6 +65,13 @@
         Show details
       </a>
     </td>
+    
+    <td>
+      <a href="/delete_question_category/<%= question_category.id %>">
+        Delete
+      </a>
+    </td>
+    
   </tr>
   <% end %>
 </table>

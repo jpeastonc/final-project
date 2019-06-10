@@ -11,7 +11,7 @@
 <table class="table table-striped">
   <tr>
     <th>
-      ID
+      #
     </th>
 
     <th>
@@ -28,12 +28,16 @@
 
     <th>
     </th>
+    
+    <th>
+    </th>
+    
   </tr>
 
-  <% @categories.each do |category| %>
+  <% @categories.each_with_index do |category,index| %>
   <tr>
     <td>
-      <%= category.id %>
+      <%= index+1 %>
     </td>
 
     <td>
@@ -53,6 +57,13 @@
         Show details
       </a>
     </td>
+    <td>
+      <a href="/delete_category/<%= category.id %>">
+        Delete
+      </a>
+    </td>    
+    
+    
   </tr>
   <% end %>
 </table>
