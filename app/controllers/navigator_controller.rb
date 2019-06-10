@@ -54,7 +54,8 @@ class NavigatorController < ApplicationController
         end
           uq.question_id = cs_id
           uq.user_id = current_user.id
-          uq.src_video=params.fetch(:srcvideotosave) 
+          #I am not saving yet the videos, need to figure out how to pass the Blob into the form      
+          #uq.src_video=params.fetch(:srcvideotosave) 
           if (uq.save)
             evaluation.comment = params.fetch("comment")
             evaluation.rating = params.fetch("rating")
