@@ -54,8 +54,7 @@ class NavigatorController < ApplicationController
         end
           uq.question_id = cs_id
           uq.user_id = current_user.id
-          uq.src_video=params.fetch("srcvideotosave")
-          
+          uq.src_video=params.fetch(:srcvideotosave) 
           if (uq.save)
             evaluation.comment = params.fetch("comment")
             evaluation.rating = params.fetch("rating")

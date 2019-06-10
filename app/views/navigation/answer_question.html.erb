@@ -72,8 +72,8 @@
     <button id="repeatvideo-button" type="button" class="btn btn-secondary  btn-block" style="display:none">Repeat Video</button>
   </div>
   <div class="col-md-2">
-    <form action="/save_user_question" method="post">
-      <input type="hidden" id="srcvideotosave" name="srcvideotosave" value="">
+    <form action="/save_user_question" method="post" enctype="multipart/form-data">
+      <input type="file" id="srcvideotosave" name="srcvideotosave" value="" >
       <button id="savevideo-button" class="btn btn-success  btn-block" style="display:none">Save Answer</button>
   </div> 
   <div class="col-md-2">
@@ -360,7 +360,7 @@
         reflection_table.style.display = "block";
         rating_row.style.display = "flex";
         comment_row.style.display = "flex";
-        srcvideotosave.value= videorecorded.src
+        //srcvideotosave.value= videorecorded.src
       //usermedia.getTracks().forEach(function(track) {track.stop();});
       };
       

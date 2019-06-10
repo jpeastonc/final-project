@@ -10,7 +10,7 @@
 #  src_video   :string
 #
 
-class UserQuestion < ApplicationRecord
+class UserQuestion < ActiveRecord::Base
   
   belongs_to :question
   belongs_to :user
